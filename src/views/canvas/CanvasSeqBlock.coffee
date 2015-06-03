@@ -142,8 +142,8 @@ module.exports = boneView.extend
 
   render: ->
 
-    @el.setAttribute 'height', @g.zoomer.get("alignmentHeight") + "px"
-    @el.setAttribute 'width', @g.zoomer.getAlignmentWidth() + "px"
+    @el.setAttribute 'height', @g.zoomer.get("alignmentHeight")
+    @el.setAttribute 'width', @g.zoomer.getAlignmentWidth()
 
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
     @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
