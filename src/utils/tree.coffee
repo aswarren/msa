@@ -55,6 +55,7 @@ tf =
       #@msa.draw()
       #@msa.render()
       console.log @msa.seqs
+      @msa.g.vis.set "treeLoaded", true
 
     # workaround against browserify's static analysis
     require: (pkg) ->
