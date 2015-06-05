@@ -29,9 +29,6 @@ module.exports = Package = Model.extend
   # internal method to get the URL for a package
   _pkgURL: (pkg) ->
 
-    if @g.config.get("debug")
-      url = @development[pkg]
-    else
-      url = "http://wzrd.in/bundle/#{pkg}@latest"
+    url = @development[pkg]
 
     url
