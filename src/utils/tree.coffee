@@ -38,7 +38,8 @@ tf =
         el: treeDiv,
         sel: sel,
 
-      #treeDiv.style.width = "500px"
+      treeDiv.style.width = "500px"
+      treeDiv.style.overflowX = "scroll"
 
       # construct msa in a virtual dom
       m = new mt.adapters.msa
