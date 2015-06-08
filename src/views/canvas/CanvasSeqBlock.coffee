@@ -92,8 +92,9 @@ module.exports = boneView.extend
       events.mousein = "_onmousein"
       events.mouseout = "_onmouseout"
 
-    events.mousewheel = "_onmousewheel"
-    events.DOMMouseScroll = "_onmousewheel"
+    if @g.config.get "registerWheelCanvas"
+      events.mousewheel = "_onmousewheel"
+      events.DOMMouseScroll = "_onmousewheel"
     @delegateEvents events
 
     # listen for changes
