@@ -13,24 +13,6 @@ module.exports = ExportMenu = MenuBuilder.extend
   render: ->
     @setName("Export")
 
-    @addNode "View in Jalview", =>
-      url = @g.config.get('url')
-      unless url?
-        alert "Sequence weren't imported via an URL"
-      else
-        if url.indexOf "localhost" or url is "dragimport"
-          Exporter.publishWeb @msa, (link) =>
-            Exporter.openInJalview link, @g.colorscheme.get "scheme"
-        else
-          Exporter.openInJalview url, @g.colorscheme.get "scheme"
-
-    @addNode "Publish to the web", =>
-      Exporter.publishWeb @msa, (link) ->
-        window.open link, '_blank'
-
-    @addNode "Share link", =>
-      Exporter.shareLink @msa, (link) ->
-        window.open link, '_blank'
 
     @addNode "Export sequences", =>
       Exporter.saveAsFile @msa, "all.fasta"
