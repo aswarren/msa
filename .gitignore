@@ -5,7 +5,6 @@ tmp
 test/all_test.js
 test/perf/all.js
 .sass-cache
-build
 lib
 bower_components/
 .bundle
