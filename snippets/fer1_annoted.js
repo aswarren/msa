@@ -1,12 +1,13 @@
 
 /* global yourDiv */
-var msa = require("msa");
-var clustal = require("biojs-io-clustal");
-var gffParser = require("biojs-io-gff");
-var xhr = require("xhr");
+var msa = window.msa;
+
+var clustal = msa.io.clustal;
+var gffParser = msa.io.gff;
+var xhr = msa.io.xhr;
 
 // set your custom properties
-// @see: https://github.com/greenify/msa/tree/master/src/g
+// @see: https://github.com/wilzbach/msa/tree/master/src/g
 
 var menuDiv = document.createElement('div');
 var msaDiv = document.createElement('div');

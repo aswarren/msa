@@ -1,11 +1,11 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.0",
-  "homepage": "http://github.com/greenify/msa",
+  "version": "0.4.16",
+  "homepage": "http://github.com/wilzbach/msa",
   "repository": {
     "type": "git",
-    "url": "git://github.com/greenify/msa"
+    "url": "git://github.com/wilzbach/msa"
   },
   "contributors": [
     {
@@ -38,58 +38,43 @@
     "blueimp_canvastoblob": "^1.0.0",
     "browser-saveas": "^1.0.0",
     "dom-helper": "^1.0.0",
-    "jbone": "^1.0.18",
+    "jbone": "^1.1.2",
     "koala-js": "^1.0.7",
     "menu-builder": "^0.0.7",
     "mouse-pos": "^1.0.3",
     "msa-colorschemes": "^1.0.8",
-    "msa-seqtools": "^0.1.6",
-    "stat.seqs": "^0.1.19",
+    "msa-seqtools": "^0.1.8",
+    "stat.seqs": "^0.1.20",
     "underscore": "^1.6.0",
     "xhr": "^1.17.0"
   },
   "devDependencies": {
-    "benchmark": "^1.0.0",
-    "biojs-io-newick": "git://github.com/greenify/biojs-io-newick",
-    "sniper": "^0.2.16",
-    "browserify": "^8.0.3",
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "biojs-io-newick": "git://github.com/wilzbach/biojs-io-newick",
     "chai": "^1.9.1",
-    "codo": "^2.0.9",
-    "coffee-script": "^1.7.1",
-    "coffeeify": "^0.7.0",
-    "coffeelint": "^1.5.5",
-    "cssify": "^0.6.0",
-    "deepcopy": "^0.3.3",
-    "del": "^0.1.3",
+    "css-loader": "^0.23.1",
     "gulp": "^3.8.7",
     "gulp-chmod": "^1.1.0",
-    "gulp-coffeelint": "^0.3.3",
     "gulp-concat": "^2.3.4",
-    "gulp-docco": "0.0.4",
     "gulp-gzip": "0.0.8",
     "gulp-minify-css": "^0.3.7",
     "gulp-mocha": "^0.5.2",
-    "gulp-mocha-phantomjs": "^0.5.0",
-    "gulp-mocha-selenium": "^1.0.0",
     "gulp-rename": "^1.2.0",
-    "gulp-run": "^1.6.3",
-    "gulp-streamify": "0.0.5",
     "gulp-uglify": "^0.3.1",
-    "gulp-util": "^3.0.0",
-    "gulp-watch": "^0.6.9",
-    "mkdirp": "^0.5.0",
+    "mkdirp-then": "^1.1.1",
     "mocha": "^1.21.4",
-    "mocha-phantomjs": "^3.5.0",
-    "phantom": "^0.7.0",
-    "phantomjs": "^1.9.7-15",
+    "msa-tnt": "^0.1.7",
     "prunner": "^1.0.0",
-    "shelljs": "^0.3.0",
     "sinon": "^1.12.1",
+    "sniper": "^0.2.16",
+    "style-loader": "^0.13.0",
     "through2": "^0.6.3",
     "tnt.tree": "0.0.10",
     "uglify-js": "~2.4.15",
-    "vinyl-source-stream": "^1.0.0",
-    "watchify": "^2.2.1"
+    "webpack": "^1.12.12"
   },
   "keywords": [
     "bio",
@@ -101,14 +86,12 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "test": "gulp test",
-    "prepublish": "gulp test-fast && gulp build && rm -rf lib && coffee --bare --compile --output lib/ src/ && ( cd src/; find . -type f -not -iname '*.coffee' -exec cp '{}' '../lib/{}' ';' )",
-    "build-browser": "gulp build-browser",
-    "build-browser-min": "gulp build",
-    "sniper": "biojs-sniper .",
-    "watch": "gulp watch",
-    "w": "prunner 'npm run sniper' 'npm run watch'",
-    "browserify-pure": "browserify -t coffeeify --extension='.coffee' -t cssify -r ./browser:msa -r biojs-io-clustal -r biojs-io-fasta -r xhr -r biojs-io-gff -d -o build/msa.js"
+    "test": "echo 'temporarily disabled'",
+    "prepublish": "./node_modules/webpack/bin/webpack.js -p && gulp build && babel -d lib src --presets es2015",
+    "build": "./node_modules/webpack/bin/webpack.js -p && gulp build",
+    "sniper": "./node_modules/sniper/bin/sniper .",
+    "watch": "./node_modules/webpack/bin/webpack.js -w",
+    "w": "prunner 'npm run sniper' 'npm run watch'"
   },
   "license": "Apache-2.0",
   "browserify": {
@@ -124,8 +107,12 @@
     "eventInstance": "m.g"
   },
   "sniper": {
+    "noBrowserify": true,
+    "buildJS": [
+      "http://cdn.bio.sh.s3.eu-central-1.amazonaws.com/msa/latest/msa.min.gz.js"
+    ],
     "js": [
-      "build/msa.js"
+      "dist/msa.js"
     ],
     "css": [
       "css/msa.css"
@@ -133,15 +120,8 @@
     "snippets": [
       "snippets"
     ],
-    "exposed": [
-      "biojs-io-fasta",
-      "biojs-io-clustal",
-      "biojs-io-gff",
-      "xhr"
-    ],
     "first": "fer1"
   },
-  "style": "./css/msa.css",
   "galaxy": {
     "datatypes": [
       "sequence.Fasta",
